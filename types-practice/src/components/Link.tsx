@@ -84,7 +84,7 @@ const LinkComponent: React.FC<linkProps> = (props) => {
       {timeDifferenceForDate(link.createdAt!)}
     </div>
   )
-  debugger
+
   return (
     <div className="flex mt2 items-start">
       <div className="flex items-center">

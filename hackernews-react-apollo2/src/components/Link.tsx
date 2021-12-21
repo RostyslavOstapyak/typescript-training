@@ -3,7 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import { AUTH_TOKEN, take, skip, orderBy } from '../constants';
 import { timeDifferenceForDate } from '../utils';
 import { FEED_QUERY } from './LinkList';
-import { feed, Link } from '../types/feed'
+import { pageData, Link } from '../types/feed'
 
 
 
@@ -31,7 +31,7 @@ interface linkProps {
   children?: React.ReactNode;
 }
 
-const Link: React.FC<linkProps> = (props) => {
+const LinkComponent: React.FC<linkProps> = (props) => {
   const { link } = props;
   const authToken = localStorage.getItem(AUTH_TOKEN);
 
@@ -41,7 +41,7 @@ const Link: React.FC<linkProps> = (props) => {
     },
     update(cache, { data: { vote } }) {
 
-      const { feed } = cache.readQuery<feed>({
+      const data = cache.readQuery<pageData>({
         query: FEED_QUERY,
         variables: {
           take,
@@ -50,7 +50,7 @@ const Link: React.FC<linkProps> = (props) => {
         }
       });
 
-      const updatedLinks = feed.links.map((feedLink: Link): Link => {
+      const updatedLinks = data?.feed.links.map((feedLink: Link): Link => {
         if (feedLink.id === link.id) {
           return {
             ...feedLink,
@@ -76,11 +76,12 @@ const Link: React.FC<linkProps> = (props) => {
     }
   });
 
+
   const content = authToken && (
     <div className="f6 lh-copy gray">
       {link.votes.length} votes | by{' '}
       {link.postedBy ? link.postedBy.name : 'Unknown'}{' '}
-      {timeDifferenceForDate(link.createdAt)}
+      {timeDifferenceForDate(link.createdAt!)}
     </div>
   )
 
@@ -108,4 +109,4 @@ const Link: React.FC<linkProps> = (props) => {
   );
 };
 
-export default Link;
+export default LinkComponent;

@@ -3,13 +3,11 @@ import { gql, useMutation } from '@apollo/client';
 import { useHistory } from 'react-router';
 import { take, skip, orderBy } from '../constants';
 import { FEED_QUERY } from './LinkList';
-import { feed } from '../types/feed'
+import { pageData } from '../types/feed'
 
 
 
-interface pageData {
-  feed: feed;
-}
+
 
 
 const CREATE_LINK_MUTATION = gql`
@@ -37,7 +35,7 @@ const CreateLink: React.FC = () => {
       url: formState.url
     },
     update: (cache, { data: { post } }) => {
-      const data: pageData = cache.readQuery({
+      const data = cache.readQuery<pageData>({
         query: FEED_QUERY,
         variables: {
           take,
@@ -50,7 +48,7 @@ const CreateLink: React.FC = () => {
         query: FEED_QUERY,
         data: {
           feed: {
-            links: [post, ...data.feed.links]
+            links: [post, ...data!.feed.links]
           }
         },
         variables: {

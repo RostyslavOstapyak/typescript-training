@@ -4,6 +4,10 @@ export interface feed {
     links: Link[];
 }
 
+export interface pageData {
+    feed: feed;
+}
+
 export interface User {
     id: string;
     name: string;
@@ -23,5 +27,5 @@ export interface Link {
     url?: string;
     postedBy?: User;
     votes: Vote[];
-    createdAt?: Date;
+    createdAt?: number | undefined;
 }

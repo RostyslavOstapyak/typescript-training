@@ -57,7 +57,9 @@ const Login: React.FC = () => {
       password: formState.password
     },
     onCompleted: ({ login }) => {
-      localStorage.setItem(AUTH_TOKEN, login.token);
+      console.log(login);
+
+      localStorage.setItem(AUTH_TOKEN, login!.token);
       history.push('/');
     }
   });
@@ -116,7 +118,7 @@ const Login: React.FC = () => {
       <div className="flex mt3">
         <button
           className="pointer mr2 button"
-          onClick={formState.login ? login : signup}
+          onClick={(event: React.MouseEvent<HTMLElement>) => formState.login ? login : signup}
         >
           {formState.login ? 'login' : 'create account'}
         </button>

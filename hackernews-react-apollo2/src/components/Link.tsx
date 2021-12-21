@@ -93,7 +93,7 @@ const LinkComponent: React.FC<linkProps> = (props) => {
           <div
             className="ml1 gray f11"
             style={{ cursor: 'pointer' }}
-            onClick={vote}
+            onClick={(event: React.MouseEvent<HTMLElement>) => { vote() }}
           >
             ▲
           </div>
@@ -105,7 +105,7 @@ const LinkComponent: React.FC<linkProps> = (props) => {
         </div>
         {content}
       </div>
-    </div>
+    </div >
   );
 };
 

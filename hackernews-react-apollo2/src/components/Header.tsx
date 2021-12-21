@@ -6,8 +6,6 @@ import { AUTH_TOKEN } from '../constants';
 const Header: React.FC = () => {
   const history = useHistory();
   const authToken = localStorage.getItem(AUTH_TOKEN);
-  console.log(authToken);
-
   return (
     <div className="flex pa1 justify-between nowrap orange">
       <div className="flex flex-fixed black">

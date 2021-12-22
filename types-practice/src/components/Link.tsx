@@ -50,7 +50,7 @@ const LinkComponent: React.FC<linkProps> = (props) => {
         }
       });
 
-      const updatedLinks = data?.feed.links.map((feedLink: Link): Link => {
+      const updatedLinks = data?.feed?.links.map((feedLink: Link): Link => {
         if (feedLink.id === link.id) {
           return {
             ...feedLink,
@@ -93,7 +93,7 @@ const LinkComponent: React.FC<linkProps> = (props) => {
           <div
             className="ml1 gray f11"
             style={{ cursor: 'pointer' }}
-            onClick={(event: React.MouseEvent<HTMLElement>) => { vote() }}
+            onClick={() => vote()}
           >
             ▲
           </div>

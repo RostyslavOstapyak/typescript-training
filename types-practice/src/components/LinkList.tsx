@@ -3,11 +3,9 @@ import { gql, useQuery } from '@apollo/client';
 import { useHistory } from 'react-router';
 import { LINKS_PER_PAGE } from '../constants';
 import LinkComponent from './Link';
-import { Link, feed } from '../types/feed'
+import { Link, pageData } from '../types/feed'
 
-interface IData {
-  feed: feed;
-}
+
 
 export const FEED_QUERY = gql`
   query FeedQuery(
@@ -87,15 +85,16 @@ const NEW_VOTES_SUBSCRIPTION = gql`
 `;
 
 
-const getLinksToRender = (isNewPage: boolean, data: IData) => {
+const getLinksToRender = (isNewPage: boolean, data: pageData) => {
   if (isNewPage) {
-    return data.feed.links;
+    return data?.feed?.links;
   }
-  const rankedLinks = data.feed.links.slice();
-  rankedLinks.sort(
+  const rankedLinks = data?.feed?.links.slice();
+
+  rankedLinks && rankedLinks.sort(
     (l1, l2) => l2.votes.length - l1.votes.length
   );
-  return rankedLinks;
+  return rankedLinks || [];
 };
 
 const getQueryVariables = (isNewPage: boolean, page: number) => {
@@ -160,7 +159,7 @@ const LinkList: React.FC = () => {
       {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
       {data && (
         <>
-          {getLinksToRender(isNewPage, data).map(
+          {getLinksToRender(isNewPage, data)?.map(
             (link: Link, index: number): React.ReactFragment => (
               <LinkComponent
                 key={link.id}

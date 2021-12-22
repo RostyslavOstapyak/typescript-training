@@ -51,14 +51,12 @@ const Login: React.FC = () => {
   });
 
 
-  const [login] = useMutation<{ login: undefined | ILogin }>(LOGIN_MUTATION, {
+  const [login] = useMutation<{ login: ILogin }>(LOGIN_MUTATION, {
     variables: {
       email: formState.email,
       password: formState.password
     },
     onCompleted: ({ login }) => {
-      console.log(login);
-
       localStorage.setItem(AUTH_TOKEN, login!.token);
       history.push('/');
     }
@@ -118,13 +116,13 @@ const Login: React.FC = () => {
       <div className="flex mt3">
         <button
           className="pointer mr2 button"
-          onClick={(event: React.MouseEvent<HTMLElement>) => formState.login ? login : signup}
+          onClick={() => formState.login ? login() : signup()}
         >
           {formState.login ? 'login' : 'create account'}
         </button>
         <button
           className="pointer button"
-          onClick={(e) =>
+          onClick={() =>
             setFormState({
               ...formState,
               login: !formState.login

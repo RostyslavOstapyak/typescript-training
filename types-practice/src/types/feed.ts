@@ -5,7 +5,7 @@ export interface feed {
 }
 
 export interface pageData {
-    feed: feed;
+    feed?: feed;
 }
 
 export interface User {

@@ -43,20 +43,21 @@ const CreateLink: React.FC = () => {
           orderBy
         }
       });
-
-      cache.writeQuery({
-        query: FEED_QUERY,
-        data: {
-          feed: {
-            links: [post, ...data!.feed.links]
+      if (data?.feed?.links) {
+        cache.writeQuery({
+          query: FEED_QUERY,
+          data: {
+            feed: {
+              links: [post, ...data.feed.links]
+            }
+          },
+          variables: {
+            take,
+            skip,
+            orderBy
           }
-        },
-        variables: {
-          take,
-          skip,
-          orderBy
-        }
-      });
+        });
+      }
     },
     onCompleted: () => history.push('/new/1')
   });
